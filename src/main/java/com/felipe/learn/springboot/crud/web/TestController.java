@@ -31,7 +31,7 @@ public class TestController {
     @GetMapping(path = "/hello/users", produces = "application/json")
     public ResponseEntity<List<UserVO>> listAllUsers() {
         List<UserVO> users = StreamSupport.stream(userRepository.findAll().spliterator(), false)
-                .map(userEntity -> UserVO.builder().id(userEntity.getId()).name(userEntity.getName()).build())
+                .map(userEntity -> UserVO.builder().id(userEntity.getId()).name(userEntity.getName()).birthday(userEntity.getBirthday()).build())
                 .collect(Collectors.toList());
 
         return ResponseEntity.ok(users);
