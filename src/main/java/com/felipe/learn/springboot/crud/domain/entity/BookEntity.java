@@ -9,6 +9,7 @@ import javax.persistence.*;
 import java.time.Instant;
 
 @Entity
+@Builder
 @Table(name = "book")
 @Data
 public class BookEntity {
