@@ -1,18 +1,15 @@
 package com.felipe.learn.springboot.crud.web;
 
 import com.felipe.learn.springboot.crud.domain.entity.UserEntity;
-import com.felipe.learn.springboot.crud.domain.vo.HelloVO;
-
-import com.felipe.learn.springboot.crud.domain.vo.UserVO;
 import com.felipe.learn.springboot.crud.domain.repo.UserRepository;
+import com.felipe.learn.springboot.crud.domain.vo.UserVO;
 import lombok.AllArgsConstructor;
-import org.apache.catalina.User;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
-import java.text.MessageFormat;
 import java.util.List;
+import java.util.Optional;
 import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -34,6 +31,21 @@ public class UserController {
 
     }
 
+    @GetMapping(path = "/{userId}", produces = "application/json")
+    public ResponseEntity<UserVO> getUser(@PathVariable("userId") Integer userId) {
+        Optional<UserEntity> userEntity = userRepository.findById(userId);
+        if(userEntity.isPresent()){
+            UserVO userVO = UserVO.builder()
+                    .id(userEntity.get().getId())
+                    .name(userEntity .get().getName())
+                    .phone(userEntity.get().getPhone())
+                    .build();
+            return ResponseEntity.ok(userVO);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     @PostMapping(path = "/{userId}", consumes = "application/json", produces = "application/json")
     public ResponseEntity<UserVO> addOrUpdate(
             @PathVariable("userId") Integer userId,
@@ -49,6 +61,14 @@ public class UserController {
         userRepository.save(user);
         return ResponseEntity.created(URI.create("/user/" + userId)).body(userVO);
 
+    }
+
+
+   @DeleteMapping (path= "/{userId}", consumes= "application/json", produces = "application/json")
+    public ResponseEntity delete(@PathVariable("userId") Integer userId){
+
+        userRepository.deleteById(userId);
+        return ResponseEntity.noContent().build();
     }
 
     private Integer getId() {

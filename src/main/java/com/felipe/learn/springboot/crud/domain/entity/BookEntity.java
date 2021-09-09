@@ -1,9 +1,6 @@
 package com.felipe.learn.springboot.crud.domain.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Cleanup;
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.Instant;
@@ -12,32 +9,33 @@ import java.time.Instant;
 @Builder
 @Table(name = "book")
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class BookEntity {
 
-    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "book_id", nullable = false)
     @Id
     private Integer id;
 
-    @Column(name = "book_title", nullable = false)
+    @Column(name = "book_title", nullable = true)
     private String title;
 
-    @Column(name = "subtitle", nullable = false)
+    @Column(name = "subtitle", nullable = true)
     private String subtitle;
 
-    @Column(name = "series_name", nullable = false)
+    @Column(name = "series_name", nullable = true)
     private String series;
 
-    @Column(name = "price", nullable = false)
+    @Column(name = "price", nullable = true)
     private String price;
 
-    @Column(name = "pages", nullable = false)
+    @Column(name = "pages", nullable = true)
     private Integer pages;
 
-    @Column(name = "author", nullable = false)
+    @Column(name = "author", nullable = true)
     private String author;
 
-    @Column(name = "book_description", nullable = false)
+    @Column(name = "book_description", nullable = true)
     private String description;
 
 
